@@ -21,7 +21,7 @@ No breaking changes will be made to exported APIs before v2.0.0.
 
 ## 💡 Usage
 
-You can import `config` using:
+You can import `watermillx` using:
 
 ```go
 package main
