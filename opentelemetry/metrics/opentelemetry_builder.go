@@ -1,9 +1,10 @@
 package metrics
 
 import (
+	"fmt"
+
 	"github.com/ThreeDotsLabs/watermill/message"
 	"github.com/cyg-pd/go-watermillx/internal/utils"
-	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/metric"
 )
 
@@ -51,7 +52,7 @@ func (b OpenTelemetryMetricsBuilder) DecoratePublisher(pub message.Publisher) (m
 	)
 
 	if err != nil {
-		return nil, errors.Wrap(err, "could not register publish time metric")
+		return nil, fmt.Errorf("could not register publish time metric: %w", err)
 	}
 	return d, nil
 }
@@ -68,12 +69,12 @@ func (b OpenTelemetryMetricsBuilder) DecorateSubscriber(sub message.Subscriber) 
 		metric.WithDescription("The total number of messages received by the subscriber"),
 	)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not register time to ack metric")
+		return nil, fmt.Errorf("could not register time to ack metric: %w", err)
 	}
 
 	d.Subscriber, err = message.MessageTransformSubscriberDecorator(d.recordMetrics)(sub)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not decorate subscriber with metrics decorator")
+		return nil, fmt.Errorf("could not decorate subscriber with metrics decorator: %w", err)
 	}
 
 	return d, nil

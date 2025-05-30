@@ -1,10 +1,10 @@
 package metrics
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/ThreeDotsLabs/watermill/message"
-	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 )
@@ -58,7 +58,7 @@ func (b OpenTelemetryMetricsBuilder) NewRouterMiddleware() HandlerOpenTelemetryM
 		metric.WithExplicitBucketBoundaries(b.HandlerBuckets...),
 	)
 	if err != nil {
-		panic(errors.Wrap(err, "could not register handler execution time metric"))
+		panic(fmt.Errorf("could not register handler execution time metric: %w", err))
 	}
 
 	return m
