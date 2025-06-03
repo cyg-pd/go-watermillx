@@ -59,7 +59,7 @@ func (m PublisherOpenTelemetryMetricsDecorator) publishOne(topic string, msg *me
 	if labelsMap[labelKeyHandlerName] == "" {
 		labelsMap[labelKeyHandlerName] = labelValueNoHandler
 	}
-	labels := make([]attribute.KeyValue, len(labelsMap))
+	labels := make([]attribute.KeyValue, 0, len(labelsMap))
 	for k, v := range labelsMap {
 		labels = append(labels, attribute.String(k, v))
 	}

@@ -20,7 +20,7 @@ func (m HandlerOpenTelemetryMetricsMiddleware) Middleware(h message.HandlerFunc)
 		now := time.Now()
 		ctx := msg.Context()
 		labelsMap := labelsFromCtx(ctx, handlerLabelKeys...)
-		labels := make([]attribute.KeyValue, len(labelsMap))
+		labels := make([]attribute.KeyValue, 0, len(labelsMap))
 		for k, v := range labelsMap {
 			labels = append(labels, attribute.String(k, v))
 		}
