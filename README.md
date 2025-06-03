@@ -41,7 +41,7 @@ import (
 	_ "github.com/cyg-pd/go-otelx/autoconf"
 	"github.com/cyg-pd/go-watermillx/cqrx"
 	"github.com/cyg-pd/go-watermillx/driver"
-	_ "github.com/cyg-pd/go-watermillx-driver-kafka"
+	_ "github.com/cyg-pd/go-watermillx/driver/kafka"
 	"github.com/cyg-pd/go-watermillx/manager"
 	"github.com/cyg-pd/go-watermillx/opentelemetry/metrics"
 	"github.com/cyg-pd/go-watermillx/opentelemetry/trace"
