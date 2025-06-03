@@ -129,11 +129,10 @@ func (c *CQRS) CommandProcessor(opts ...commandProcessorOption) (*cqrs.CommandPr
 			return nil, err
 		}
 
-		if h, ok := params.Handler.(HandlerConsumerGroup); ok {
-			if g := h.ConsumerGroup(); g != "" {
-				return c.buildSubscriber(topic, driver.WithSubscriberConsumerGroup(g))
-			}
+		if g := params.HandlerName; g != "" {
+			return c.buildSubscriber(topic, driver.WithSubscriberConsumerGroup(g))
 		}
+
 		return c.buildSubscriber(topic, driver.WithSubscriberConsumerGroup(topic))
 	}
 
@@ -189,13 +188,11 @@ func (c *CQRS) EventProcessor(opts ...eventProcessorOption) (*cqrs.EventProcesso
 			return nil, err
 		}
 
-		if h, ok := params.EventHandler.(HandlerConsumerGroup); ok {
-			if g := h.ConsumerGroup(); g != "" {
-				return c.buildSubscriber(topic, driver.WithSubscriberConsumerGroup(g))
-			}
+		if g := params.HandlerName; g != "" {
+			return c.buildSubscriber(topic, driver.WithSubscriberConsumerGroup(g))
 		}
-		return c.buildSubscriber(topic, driver.WithSubscriberConsumerGroup(topic))
 
+		return c.buildSubscriber(topic, driver.WithSubscriberConsumerGroup(topic))
 	}
 
 	v, err := cqrs.NewEventProcessorWithConfig(c.router, conf)
@@ -226,7 +223,6 @@ func (c *CQRS) EventGroupProcessor(opts ...eventGroupProcessorOption) (*cqrs.Eve
 		}
 
 		return c.buildSubscriber(topic, driver.WithSubscriberConsumerGroup(params.EventGroupName))
-
 	}
 
 	v, err := cqrs.NewEventGroupProcessorWithConfig(c.router, conf)
