@@ -7,10 +7,10 @@ require (
 	github.com/ThreeDotsLabs/watermill v1.4.6
 	github.com/ThreeDotsLabs/watermill-kafka/v3 v3.0.6
 	github.com/cyg-pd/go-kebabcase v1.0.0
-	github.com/cyg-pd/go-reflectx v0.0.1
 	github.com/dentech-floss/watermill-opentelemetry-go-extra v0.1.1
 	github.com/go-viper/mapstructure/v2 v2.2.1
 	github.com/prometheus/client_golang v1.22.0
+	github.com/stretchr/testify v1.10.0
 	github.com/voi-oss/watermill-opentelemetry v0.1.3
 	go.opentelemetry.io/otel v1.36.0
 	go.opentelemetry.io/otel/metric v1.36.0
@@ -44,6 +44,7 @@ require (
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.64.0 // indirect
 	github.com/prometheus/procfs v0.16.1 // indirect
@@ -54,6 +55,7 @@ require (
 	golang.org/x/net v0.40.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 retract v0.0.1 // This version was accidentally released. Please use version 0.0.2 instead.

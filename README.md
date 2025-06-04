@@ -44,7 +44,6 @@ import (
 	_ "github.com/cyg-pd/go-watermillx/driver/kafka"
 	"github.com/cyg-pd/go-watermillx/manager"
 	"github.com/cyg-pd/go-watermillx/opentelemetry/metrics"
-	"github.com/cyg-pd/go-watermillx/opentelemetry/trace"
 	"github.com/cyg-pd/go-watermillx/router"
 )
 
@@ -57,20 +56,18 @@ func must0(err error) {
 }
 
 func must[T any](v T, err error) T {
-	if err != nil {
-		panic(err)
-	}
+	must0(err)
 	return v
 }
 
 func main() {
+	mb := metrics.NewOpenTelemetryMetricsBuilder(otelx.Meter(), "", "")
+
 	r := must(router.New())
 	r.AddMiddleware(middleware.Recoverer)
-	r.AddMiddleware(trace.HandlerMiddleware())
-	r.AddPublisherDecorators(trace.PublisherDecorator())
-
-	mb := metrics.NewOpenTelemetryMetricsBuilder(otelx.Meter(), "", "")
-	mb.AttachRouter(r)
+	r.AddMiddleware(opentelemetry.HandlerMiddleware(mb))
+	r.AddPublisherDecorators(opentelemetry.PublisherDecorator(mb))
+	r.AddSubscriberDecorators(opentelemetry.SubscriberDecorator(mb))
 
 	da := must(driver.New("kafka", `{"Brokers": ["localhost:9092"], "InitializeTopicDetails":{"NumPartitions": 3}}`))
 	db := must(driver.New("kafka", `{"Brokers": ["localhost:9092"], "InitializeTopicDetails":{"NumPartitions": 10}}`))
@@ -80,14 +77,12 @@ func main() {
 	m.Add("kafka-b", db)
 
 	cqrsA := m.MustUseCQRS("kafka-a")
-	cqrsA.AddPublisherDecorator(trace.PublisherDecorator())
-	cqrsA.AddPublisherDecorator(mb.DecoratePublisher)
-	cqrsA.AddSubscriberDecorator(mb.DecorateSubscriber)
+	cqrsA.AddPublisherDecorator(opentelemetry.PublisherDecorator(mb))
+	cqrsA.AddSubscriberDecorator(opentelemetry.SubscriberDecorator(mb))
 
 	cqrsB := m.MustUseCQRS("kafka-b")
-	cqrsB.AddPublisherDecorator(trace.PublisherDecorator())
-	cqrsB.AddPublisherDecorator(mb.DecoratePublisher)
-	cqrsB.AddSubscriberDecorator(mb.DecorateSubscriber)
+	cqrsB.AddPublisherDecorator(opentelemetry.PublisherDecorator(mb))
+	cqrsB.AddSubscriberDecorator(opentelemetry.SubscriberDecorator(mb))
 
 	commandBus := cqrsA.MustCommandBus(cqrx.WithCommandBusOnSend(commandBusOnSendHook))
 	commandProcessor := cqrsA.MustCommandProcessor(cqrx.WithCommandProcessorOnHandle(commandProcessorOnHandleHook))

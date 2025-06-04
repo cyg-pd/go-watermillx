@@ -53,8 +53,11 @@ func (m PublisherOpenTelemetryMetricsDecorator) publishOne(topic string, msg *me
 
 	ctx := msg.Context()
 	labelsMap := labelsFromCtx(ctx, publisherLabelKeys...)
-	if labelsMap[labelKeyPublisherName] == "" {
+	if labelsMap[labelKeyPublisherName] == "" || labelsMap[labelKeyPublisherName] == "message.disabledPublisher" {
 		labelsMap[labelKeyPublisherName] = m.publisherName
+	}
+	if labelsMap[labelKeyPublishTopic] == "" {
+		labelsMap[labelKeyPublishTopic] = topic
 	}
 	if labelsMap[labelKeyHandlerName] == "" {
 		labelsMap[labelKeyHandlerName] = labelValueNoHandler

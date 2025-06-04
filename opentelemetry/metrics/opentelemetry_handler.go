@@ -63,3 +63,7 @@ func (b OpenTelemetryMetricsBuilder) NewRouterMiddleware() HandlerOpenTelemetryM
 
 	return m
 }
+
+func (b OpenTelemetryMetricsBuilder) RouterMiddleware(h message.HandlerFunc) message.HandlerFunc {
+	return b.NewRouterMiddleware().Middleware(h)
+}

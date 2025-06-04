@@ -11,11 +11,10 @@ type PrometheusMetricsBuilder struct {
 	metrics.PrometheusMetricsBuilder
 }
 
-// AttachRouter implements MetricsBuilder.
-func (p *PrometheusMetricsBuilder) AttachRouter(router *message.Router) {
-	p.AddPrometheusRouterMetrics(router)
+// RouterMiddleware implements Builder.
+func (p *PrometheusMetricsBuilder) RouterMiddleware(h message.HandlerFunc) message.HandlerFunc {
+	return p.NewRouterMiddleware().Middleware(h)
 }
-
 func NewPrometheusMetricsBuilder(prometheusRegistry prometheus.Registerer, namespace string, subsystem string) *PrometheusMetricsBuilder {
 	return &PrometheusMetricsBuilder{
 		PrometheusMetricsBuilder: metrics.NewPrometheusMetricsBuilder(prometheusRegistry, namespace, subsystem),
