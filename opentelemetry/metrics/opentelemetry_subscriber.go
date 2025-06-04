@@ -13,7 +13,7 @@ type SubscriberOpenTelemetryMetricsDecorator struct {
 	subscriberMessagesReceivedTotal metric.Int64Counter
 }
 
-func (s SubscriberOpenTelemetryMetricsDecorator) recordMetrics(msg *message.Message) {
+func (s SubscriberOpenTelemetryMetricsDecorator) recordMetrics(topic string, msg *message.Message) {
 	if msg == nil {
 		return
 	}
@@ -22,6 +22,9 @@ func (s SubscriberOpenTelemetryMetricsDecorator) recordMetrics(msg *message.Mess
 	labelsMap := labelsFromCtx(ctx, subscriberLabelKeys...)
 	if labelsMap[labelKeySubscriberName] == "" {
 		labelsMap[labelKeySubscriberName] = s.subscriberName
+	}
+	if labelsMap[labelKeySubscribeTopic] == "" {
+		labelsMap[labelKeySubscribeTopic] = topic
 	}
 	if labelsMap[labelKeyHandlerName] == "" {
 		labelsMap[labelKeyHandlerName] = labelValueNoHandler

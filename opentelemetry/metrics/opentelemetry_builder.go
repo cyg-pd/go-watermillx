@@ -5,6 +5,7 @@ import (
 
 	"github.com/ThreeDotsLabs/watermill/message"
 	"github.com/cyg-pd/go-watermillx/internal/utils"
+	"github.com/cyg-pd/go-watermillx/messagex"
 	"go.opentelemetry.io/otel/metric"
 )
 
@@ -26,14 +27,6 @@ type OpenTelemetryMetricsBuilder struct {
 	PublishBuckets []float64
 	// HandlerBuckets defines the histogram buckets for handle execution time histogram, defaulted to watermill's default.
 	HandlerBuckets []float64
-}
-
-// AddOpenTelemetryRouterMetrics is a convenience function that acts on the message router to add the metrics middleware
-// to all its handlers. The handlers' publishers and subscribers are also decorated.
-func (b OpenTelemetryMetricsBuilder) AttachRouter(r *message.Router) {
-	r.AddPublisherDecorators(b.DecoratePublisher)
-	r.AddSubscriberDecorators(b.DecorateSubscriber)
-	r.AddMiddleware(b.NewRouterMiddleware().Middleware)
 }
 
 // DecoratePublisher wraps the underlying publisher with OpenTelemetry metrics.
@@ -72,7 +65,7 @@ func (b OpenTelemetryMetricsBuilder) DecorateSubscriber(sub message.Subscriber) 
 		return nil, fmt.Errorf("could not register time to ack metric: %w", err)
 	}
 
-	d.Subscriber, err = message.MessageTransformSubscriberDecorator(d.recordMetrics)(sub)
+	d.Subscriber, err = messagex.MessageTransformSubscriberDecorator(d.recordMetrics)(sub)
 	if err != nil {
 		return nil, fmt.Errorf("could not decorate subscriber with metrics decorator: %w", err)
 	}
