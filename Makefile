@@ -22,14 +22,14 @@ tools:
 	go install github.com/rakyll/gotest@latest
 	go install github.com/psampaz/go-mod-outdated@latest
 	go install github.com/jondot/goweight@latest
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2
 	go get -t -u golang.org/x/tools/cmd/cover
 	go install github.com/sonatype-nexus-community/nancy@latest
 	go mod tidy
 
-lint:
+lint: tools
 	golangci-lint run --timeout 60s --max-same-issues 50 ./...
-lint-fix:
+lint-fix: tools
 	golangci-lint run --timeout 60s --max-same-issues 50 --fix ./...
 
 audit: tools
