@@ -8,7 +8,7 @@ require (
 	github.com/ThreeDotsLabs/watermill-kafka/v3 v3.0.6
 	github.com/cyg-pd/go-kebabcase v1.0.0
 	github.com/dentech-floss/watermill-opentelemetry-go-extra v0.1.1
-	github.com/go-viper/mapstructure/v2 v2.2.1
+	github.com/go-viper/mapstructure/v2 v2.3.0
 	github.com/prometheus/client_golang v1.22.0
 	github.com/stretchr/testify v1.10.0
 	github.com/voi-oss/watermill-opentelemetry v0.1.3
