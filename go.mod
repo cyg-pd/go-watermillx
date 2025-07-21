@@ -11,7 +11,7 @@ require (
 	github.com/ThreeDotsLabs/watermill-redisstream v1.4.3
 	github.com/cyg-pd/go-kebabcase v1.0.0
 	github.com/dentech-floss/watermill-opentelemetry-go-extra v0.1.1
-	github.com/go-viper/mapstructure/v2 v2.3.0
+	github.com/go-viper/mapstructure/v2 v2.4.0
 	github.com/prometheus/client_golang v1.22.0
 	github.com/redis/go-redis/v9 v9.11.0
 	github.com/stretchr/testify v1.10.0
