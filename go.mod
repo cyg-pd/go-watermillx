@@ -12,7 +12,7 @@ require (
 	github.com/cyg-pd/go-kebabcase v1.0.0
 	github.com/dentech-floss/watermill-opentelemetry-go-extra v0.1.1
 	github.com/go-viper/mapstructure/v2 v2.4.0
-	github.com/prometheus/client_golang v1.22.0
+	github.com/prometheus/client_golang v1.23.0
 	github.com/redis/go-redis/v9 v9.11.0
 	github.com/stretchr/testify v1.10.0
 	github.com/voi-oss/watermill-opentelemetry v0.1.3
@@ -63,7 +63,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
-	github.com/prometheus/common v0.64.0 // indirect
+	github.com/prometheus/common v0.65.0 // indirect
 	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
