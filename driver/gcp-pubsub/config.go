@@ -1,6 +1,9 @@
 package pubsub
 
-import "cloud.google.com/go/pubsub"
+import (
+	"cloud.google.com/go/pubsub/v2"
+	"cloud.google.com/go/pubsub/v2/apiv1/pubsubpb"
+)
 
 type GoogleCloudPubSubConfig struct {
 	ProjectID                        string
@@ -10,7 +13,7 @@ type GoogleCloudPubSubConfig struct {
 	DoNotCreateSubscriptionIfMissing bool
 	Subscriber                       struct {
 		ReceiveSettings    pubsub.ReceiveSettings
-		SubscriptionConfig pubsub.SubscriptionConfig
+		SubscriptionConfig pubsubpb.Subscription
 	}
 	Publisher struct {
 		EnableMessageOrdering                         bool

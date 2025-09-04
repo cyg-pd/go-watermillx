@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"cloud.google.com/go/pubsub/v2/apiv1/pubsubpb"
 	"github.com/ThreeDotsLabs/watermill"
-	watermillgooglecloud "github.com/ThreeDotsLabs/watermill-googlecloud/pkg/googlecloud"
+	"github.com/ThreeDotsLabs/watermill-googlecloud/v2/pkg/googlecloud"
 	"github.com/ThreeDotsLabs/watermill/message"
 	"github.com/cyg-pd/go-watermillx/driver"
 	"github.com/go-viper/mapstructure/v2"
@@ -23,7 +24,7 @@ type GoogleCloudPubSub struct {
 }
 
 func (g *GoogleCloudPubSub) Publisher() (message.Publisher, error) {
-	conf := watermillgooglecloud.PublisherConfig{
+	conf := googlecloud.PublisherConfig{
 		ProjectID:                                     g.conf.ProjectID,
 		DoNotCheckTopicExistence:                      g.conf.DoNotCheckTopicExistence,
 		DoNotCreateTopicIfMissing:                     g.conf.DoNotCreateTopicIfMissing,
@@ -35,7 +36,7 @@ func (g *GoogleCloudPubSub) Publisher() (message.Publisher, error) {
 		conf.ProjectID = g.conf.TopicProjectID
 	}
 
-	publisher, err := watermillgooglecloud.NewPublisher(conf, watermill.NewSlogLogger(nil))
+	publisher, err := googlecloud.NewPublisher(conf, watermill.NewSlogLogger(nil))
 	if err != nil {
 		return nil, fmt.Errorf("watermillx/driver/gcp-pubsub: create new publisher error: %w", err)
 	}
@@ -47,7 +48,7 @@ func (g *GoogleCloudPubSub) Subscriber(opts ...driver.SubscriberOption) (message
 	var c driver.SubscriberConfig
 	c.Apply(opts)
 
-	conf := watermillgooglecloud.SubscriberConfig{
+	conf := googlecloud.SubscriberConfig{
 		GenerateSubscriptionName: func(topic string) string {
 			if c.ConsumerGroup != "" {
 				return c.ConsumerGroup
@@ -59,10 +60,12 @@ func (g *GoogleCloudPubSub) Subscriber(opts ...driver.SubscriberOption) (message
 		DoNotCreateTopicIfMissing:        g.conf.DoNotCreateTopicIfMissing,
 		DoNotCreateSubscriptionIfMissing: g.conf.DoNotCreateSubscriptionIfMissing,
 		ReceiveSettings:                  g.conf.Subscriber.ReceiveSettings,
-		SubscriptionConfig:               g.conf.Subscriber.SubscriptionConfig,
+		GenerateSubscription: func(params googlecloud.GenerateSubscriptionParams) *pubsubpb.Subscription {
+			return &g.conf.Subscriber.SubscriptionConfig
+		},
 	}
 
-	subscriber, err := watermillgooglecloud.NewSubscriber(conf, watermill.NewSlogLogger(nil))
+	subscriber, err := googlecloud.NewSubscriber(conf, watermill.NewSlogLogger(nil))
 	if err != nil {
 		return nil, fmt.Errorf("watermillx/driver/gcp-pubsub: create new subscriber error: %w", err)
 	}
