@@ -7,7 +7,7 @@ require (
 	github.com/IBM/sarama v1.45.2
 	github.com/ThreeDotsLabs/watermill v1.4.7
 	github.com/ThreeDotsLabs/watermill-googlecloud v1.2.4
-	github.com/ThreeDotsLabs/watermill-kafka/v3 v3.0.6
+	github.com/ThreeDotsLabs/watermill-kafka/v3 v3.1.0
 	github.com/ThreeDotsLabs/watermill-redisstream v1.4.3
 	github.com/cyg-pd/go-kebabcase v1.0.0
 	github.com/dentech-floss/watermill-opentelemetry-go-extra v0.1.1
