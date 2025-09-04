@@ -5,7 +5,7 @@ go 1.24
 require (
 	cloud.google.com/go/pubsub v1.50.0
 	github.com/IBM/sarama v1.45.2
-	github.com/ThreeDotsLabs/watermill v1.4.7
+	github.com/ThreeDotsLabs/watermill v1.5.0
 	github.com/ThreeDotsLabs/watermill-googlecloud v1.2.4
 	github.com/ThreeDotsLabs/watermill-kafka/v3 v3.1.0
 	github.com/ThreeDotsLabs/watermill-redisstream v1.4.3
