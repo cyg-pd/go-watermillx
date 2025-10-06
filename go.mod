@@ -3,7 +3,7 @@ module github.com/cyg-pd/go-watermillx
 go 1.24.0
 
 require (
-	cloud.google.com/go/pubsub/v2 v2.0.0
+	cloud.google.com/go/pubsub/v2 v2.2.0
 	github.com/IBM/sarama v1.46.0
 	github.com/ThreeDotsLabs/watermill v1.5.1
 	github.com/ThreeDotsLabs/watermill-googlecloud/v2 v2.0.0
